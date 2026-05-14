@@ -321,16 +321,17 @@ This enables one-click deployment via Render Blueprint. When connected to the Gi
 5. Configures SSL/TLS certificates automatically
 6. Provides a public HTTPS URL
 
-**Public Access (localhost.run tunnel):**
+**Public Access:**
 
-For immediate verification and demo purposes, the application is accessible via SSH reverse tunnel at:
+The application is deployed and publicly accessible via Render at:
 
-**https://f21bd272cf2aa5.lhr.life**
+**https://quizmaster.onrender.com** (or your custom Render URL)
 
-This tunnel provides:
-- HTTPS termination with valid SSL certificates
-- Public accessibility from any internet-connected device
-- Real-time proxying to the local development server
+Render provides:
+- Automatic HTTPS/SSL certificate management
+- Global CDN via Cloudflare integration
+- PostgreSQL database with automated backups
+- Continuous deployment from GitHub pushes
 
 ### 5.2 Production Configuration
 
@@ -447,5 +448,6 @@ The project showcases mastery of:
 ---
 
 *QuizMaster - A Cloud-Based Assessment Platform*
-*Deployed at: https://f21bd272cf2aa5.lhr.life*
+*Deployed at: https://quizmaster.onrender.com*
 *Source Code: https://github.com/HaykelLachiheb/QuizMaster*
+*Deploy: https://render.com/deploy?repo=https://github.com/HaykelLachiheb/QuizMaster*

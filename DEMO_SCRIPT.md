@@ -149,6 +149,7 @@ Thank you for watching. The source code is available on GitHub, and the link is 
 
 ## Quick Links
 
-- **Deployed App:** https://f21bd272cf2aa5.lhr.life
+- **Deployed App:** https://quizmaster.onrender.com
 - **GitHub Repo:** https://github.com/HaykelLachiheb/QuizMaster
 - **Report:** REPORT.md
+- **Deploy:** https://render.com/deploy?repo=https://github.com/HaykelLachiheb/QuizMaster
