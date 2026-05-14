@@ -20,11 +20,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/classes', classRoutes);
 app.use('/api/quizzes', quizRoutes);
 
-if (process.env.NODE_ENV === 'production') {
-  const clientPath = path.join(__dirname, '../../client/dist');
-  app.use(express.static(clientPath));
+const fs = require('fs');
+const clientDistPath = path.join(__dirname, '../../client/dist');
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(clientPath, 'index.html'));
+    res.sendFile(path.join(clientDistPath, 'index.html'));
   });
 }
 
