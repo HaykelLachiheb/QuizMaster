@@ -12,6 +12,7 @@ export default function TakeQuiz() {
   const [timeLeft, setTimeLeft] = useState(null);
   const [loading, setLoading] = useState(true);
   const timerRef = useRef(null);
+  const isSubmittingRef = useRef(false);
 
   useEffect(() => {
     quizAPI.getOne(id)
@@ -26,7 +27,7 @@ export default function TakeQuiz() {
   }, [id]);
 
   useEffect(() => {
-    if (timeLeft === null || submitted) return;
+    if (timeLeft === null || submitted || isSubmittingRef.current) return;
     if (timeLeft <= 0) {
       handleSubmit();
       return;
@@ -42,6 +43,8 @@ export default function TakeQuiz() {
   };
 
   const handleSubmit = async () => {
+    if (isSubmittingRef.current || submitted) return;
+    isSubmittingRef.current = true;
     if (timerRef.current) clearInterval(timerRef.current);
     setSubmitted(true);
     try {
@@ -54,6 +57,7 @@ export default function TakeQuiz() {
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to submit');
       setSubmitted(false);
+      isSubmittingRef.current = false;
     }
   };
 

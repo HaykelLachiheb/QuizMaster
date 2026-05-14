@@ -132,6 +132,16 @@ exports.update = async (req, res) => {
     });
 
     if (questions) {
+      const attemptCount = await db('quiz_attempts')
+        .where({ quiz_id: quiz.id })
+        .whereNotNull('submitted_at')
+        .count('id as count')
+        .first();
+
+      if (parseInt(attemptCount.count) > 0) {
+        return res.status(400).json({ error: 'Cannot modify questions after quiz has been attempted.' });
+      }
+
       const oldQuestions = await db('questions').where({ quiz_id: quiz.id });
       for (let oldQ of oldQuestions) {
         await db('question_options').where({ question_id: oldQ.id }).del();
@@ -214,6 +224,13 @@ exports.submit = async (req, res) => {
     const { answers } = req.body;
     const quiz = await exports.getFullQuiz(req.params.id);
     if (!quiz) return res.status(404).json({ error: 'Quiz not found.' });
+
+    const enrollment = await db('class_students')
+      .where({ class_id: quiz.class_id, student_id: req.user.id })
+      .first();
+    if (!enrollment) {
+      return res.status(403).json({ error: 'Not enrolled in this class.' });
+    }
 
     const existingAttempt = await db('quiz_attempts')
       .where({ quiz_id: quiz.id, student_id: req.user.id })
