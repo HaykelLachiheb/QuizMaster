@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: quizmaster
+    env: node
+    buildCommand: cd client && npm install && npm run build && cd ../server && npm install
+    startCommand: cd server && node src/app.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: quizmaster-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+    healthCheckPath: /api/health
+
+databases:
+  - name: quizmaster-db
+    databaseName: quizmaster
+    plan: free
