@@ -3,7 +3,7 @@ services:
     name: quizmaster
     env: node
     buildCommand: cd client && npm install && npm run build && cd ../server && npm install
-    startCommand: cd server && node src/app.js
+    startCommand: cd server && npx knex migrate:latest --env production && node src/app.js
     envVars:
       - key: NODE_ENV
         value: production
